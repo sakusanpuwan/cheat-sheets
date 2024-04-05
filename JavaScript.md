@@ -686,7 +686,7 @@ async function msg() {
 
 msg(); // Message: Hello World! <-- after 2 seconds 
 ```
-## // Handling API requests
+## Handling API requests
 ```js
 // GET request
 const getData = async() => { 
