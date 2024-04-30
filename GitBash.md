@@ -48,6 +48,7 @@ Git is a version control system (VCS) used to record the completely history of a
 | `git add`                                                                                                                                         | Stages the changes to the chosen files, preparing them for commitment.<br>**Use cases:** <ul><li>`git add .` will stage the changes to all files in the repo.</li><li>`git add index.html` will stage the changes to only index.html.</li><li>`git add --all`, also `gaa` will stage the changes to all files within the git repository - this reaches up to the highest level (seeks the highest level parent directory of the current folder that is still within the git repo).</li></ul> |
 | `git commit -m ""`                                                                                                                                | Commits the staged changes, recording the details of any changes to the files, and saving this to the log of changes. A message (required) must be added using `-m "message goes here"`.<br>**Use cases:** <ul><li>`git commit -m "adds index.html"` will commit the changes, with the message. After committing, the repo is once again considered as unmodified, and so the following commit will include all the changes since this commit.</li></ul>                                     |
 | `git log`                                                                                                                                         | Provides a history of all commits in the directory. Exit the log with `q`.                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `git log --oneline`                                                                                                                               | Provides an one-line history of all commits in the directory. Exit the log with `q`.                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `git squash`                                                                                                                                      | Amends last committed message                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `git –amend –m ""`                                                                                                                                | "Squashes" lots of commits together into one: you lose the history but you also lose the clutter.                                                                                                                                                                                                                                                                                                                                                                                            |
 | `git branch develop`                                                                                                                              | Creates new branch named develop                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -73,6 +74,7 @@ The Secure Shell Protocol, abbreviated as SSH, is a cryptographic protocol used 
 `ssh -T git@github.com`   test connection
 
 ### Rolling Back to Previous Versions using Git
+`git revert HEAD`
 `git revert "7-digit ID"`
 - This undoes any of the changes that were committed in the chosen commit.
   - The "7-digit ID" refers to the first 7 digits of the commit ID, which can be found in the log using `git log`.
@@ -85,3 +87,13 @@ The Secure Shell Protocol, abbreviated as SSH, is a cryptographic protocol used 
     - This means all commits that were committed after the selected one are also undone.
 
 <br>
+
+### Handling Merge Conflicts
+```
+Hello World
+<<<<<<< HEAD (CURRENT CHANGE)
+change from main
+=======
+change from develop
+>>>>>>> develop (INCOMING CHANGE)
+```
