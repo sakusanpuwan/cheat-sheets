@@ -31,7 +31,7 @@ In the realm of Bash commands, we typically encounter three components:
 
 ## Shortcuts
 `Ctrl + Insert` -> copy
-`Shift + Insert` -> paste 
+`Shift + Insert` or `Right Click`-> paste 
 
 ## Editing usin Vi (text editor)
 ```
