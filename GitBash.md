@@ -67,7 +67,7 @@ The Secure Shell Protocol, abbreviated as SSH, is a cryptographic protocol used 
 
 `ssh-keygen -t rsa -f ~/.ssh/id_rsa <<< y`    generate a public and private key pair
 
-`cat ~/.ssh/id_rsa.pubg`    print the public key to standard output
+`cat ~/.ssh/id_rsa.pub`    print the public key to standard output
 
 `ssh -T git@github.com`   test connection
 
