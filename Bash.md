@@ -28,6 +28,7 @@ In the realm of Bash commands, we typically encounter three components:
 | `ls -<flag>`                                         | `ls -R`                                                                           | Executes the command `ls -R` to list files and directories recursively.                                                                                      |
 | `clear`                                              | `clear`                                                                           | Clears the terminal window.                                                                                                                                  |
 | `variable=value`                                     | `my_path=/home`                                                                   | Defines a variable my_path to the value /home                                                                                                                |
+| `chmod +<filetype> <filename>`                       | `chmod +x run-sonarqube.sh`                                                       | Reformates file type e.g. txt to exe                                                                                                                         |
 
 ## Shortcuts
 `Ctrl + Insert` -> copy
