@@ -1,25 +1,52 @@
-## Primitive Data Types 
+## Primitive Data Types
 
-| Type    | Size | Range                        | Example               |
-|---------|------|------------------------------|-----------------------|
-| byte    | 8    | -27 : 27-1                   | byte myByte = 124     |
-| short   | 16   | -215 : 215-1                 | short myShort = -100  |
-| int     | 32   | -231 : 231-1                 | int myNum = 5         |
-| long    | 64   | -263 : 263 -1                | long myLong = -423000L|
-| float   | 32   | -2149 : (2-2-23)·2127        | float myFloatNum = 5.99f |
-| double  | 64   | -2-1074 : (2-2-52)·21023     | double myDouble = 42.3  |
-| char    | 16   | 0 : 216– 1                   | char myLetter = 'D'   |
-| Boolean | 1    |                              | boolean myBool = true |
+Primitive data types are the most basic data types available in Java. They are predefined by the language and have a fixed size and type. These types do not have methods associated with them, and their values are stored directly in memory.
 
-int -> primitive data type
+| Type    | Size (bits) | Range                           | Example                  |
+|---------|-------------|---------------------------------|--------------------------|
+| `byte`  | 8           | -2<sup>7</sup> to 2<sup>7</sup>-1    | `byte myByte = 124;`      |
+| `short` | 16          | -2<sup>15</sup> to 2<sup>15</sup>-1  | `short myShort = -100;`   |
+| `int`   | 32          | -2<sup>31</sup> to 2<sup>31</sup>-1  | `int myNum = 5;`          |
+| `long`  | 64          | -2<sup>63</sup> to 2<sup>63</sup>-1  | `long myLong = -423000L;` |
+| `float` | 32          | Approximately ±3.4 x 10<sup>38</sup> | `float myFloatNum = 5.99f;` |
+| `double`| 64          | Approximately ±1.7 x 10<sup>308</sup>| `double myDouble = 42.3;`  |
+| `char`  | 16          | 0 to 2<sup>16</sup>-1                 | `char myLetter = 'D';`    |
+| `boolean` | 1         | true or false                  | `boolean myBool = true;`  |
 
-Integer -> wrapped class encapsulates an int
+---
 
+### Explanation
+- **`int`** is a primitive data type that represents an integer value.
+- **`Integer`** is a wrapper class in Java that encapsulates an `int` primitive type, providing additional methods and capabilities.
 
+---
 
-String is not a primitive data type but a class sequence of char
+## Non-Primitive Data Types
 
-Array is a non-primitive data type
+Non-primitive data types are also known as **reference types**. They refer to objects and have methods associated with them. Non-primitive types are defined by the programmer and can be of various types, including classes, arrays, and interfaces.
+
+| Type           | Description                                 | Example                     |
+|----------------|---------------------------------------------|-----------------------------|
+| `String`       | A sequence of characters                    | `String myText = "Hello";`  |
+| `Array`        | A collection of elements of the same type   | `int[] myArray = {1, 2, 3};` |
+| Custom Classes | User-defined types                          | `Person myPerson = new Person();` |
+| Wrapper Classes | Provides methods for primitive types       | `Integer myInt = Integer.valueOf(10);` |
+
+### Examples
+- **`String`** is a non-primitive data type, which is actually a class in Java. It is used to store a sequence of characters.
+  - Example: `String myText = "Hello";`
+- **`Array`** is a non-primitive data type that holds multiple values of the same type in a single structure.
+  - Example: `int[] myArray = {1, 2, 3};`
+
+---
+
+### Key Differences between Primitive and Non-Primitive Types
+- **Primitive types** have a fixed size and are predefined by Java.
+- **Non-primitive types** are created by the programmer and can vary in size.
+- **Primitive types** store actual values, while **non-primitive types** store references to objects.
+
+--- 
+
 
 ```Java
 String str = "Hello"; 
@@ -30,7 +57,7 @@ int intNumber = 42;
 
 Integer integerNumber = 42; 
 
-boolean isInteger = number instanceof Integer; // False 
+boolean isInteger = intNumber instanceof Integer; // False 
 
 boolean isInteger = integerNumber instanceof Integer // True 
 
