@@ -103,6 +103,8 @@ SELECT name FROM customers WHERE country in ('USA','Canada','Mexico');
 ```
 
 ```sql
+-- Find the division code for the Bundesliga. 
+-- Use that code to find out how many matches Freiburg have played in the Bundesliga since the data started being collected.
 SELECT COUNT (*) FROM games 
 WHERE division_code = (
     SELECT code 
@@ -114,6 +116,7 @@ AND home_team = 'Freiburg' OR away_team = 'Freiburg'
 
 
 ```sql
+-- How many draws were there in the Eredivisie between 2010 and 2015?
 SELECT COUNT (*) FROM games 
 WHERE division_code = (
     SELECT code 
@@ -125,6 +128,8 @@ AND ftr = 'D';
 ```
 
 ```sql
+-- Select the matches played in the Premier League in order of total goals scored from highest to lowest. 
+-- Where there is a tie the match with more home goals should come first.
 SELECT games.* , (fthg + ftag) AS total_goals 
 FROM games 
 WHERE division_code = (
@@ -134,6 +139,7 @@ WHERE division_code = (
 ORDER BY total_goals DESC, fthg DESC;
 ```
 ```sql
+-- In which division and which season were the most goals scored?
 SELECT divisions.name, games.season, SUM(fthg + ftag) AS total_goals
 FROM games
 INNER JOIN divisions
