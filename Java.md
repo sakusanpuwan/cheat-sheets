@@ -139,6 +139,15 @@ while (i < 5) {
 }
 ```
 
+### Do While Loop
+```java
+int i = 5;
+
+do {
+    i --;    
+} while (i != 0);
+```
+
 ### If - else Statement
 ```java
 int x = 10;
@@ -467,25 +476,45 @@ for (Map.Entry<KeyType, ValueType> entry : map.entrySet()) {
 Streams are a new abstraction introduced in Java 8 that lets you process collections of objects in a functional way.  
 Streams allow you to perform operations like filtering, mapping, and reducing on collections in a declarative way, without the need for explicit loops.
 
-- `.filter()` - remove elements from the Stream that don't match a predicate, returns a new Stream
-- `.map()` - transform elements in the Stream to another value, returns a new Stream
-- `.sorted()` - sort the elements in the Stream, returns a new Stream
-- `.distinct()` - remove duplicate elements from the Stream, returns a new Stream
-- `.limit()` - limit the number of elements in the Stream, returns a new Stream
-- `.skip()` - skip a number of elements in the Stream, returns a new Stream
-- `.flatMap()` - transform each element in the Stream to a Stream of elements, then flatten the Streams into a single Stream
-- `.forEach()` - perform an action on each element in the Stream, returns void
-- `.reduce()` - reduce the elements in the Stream to a single value, returns an Optional
-- `.anyMatch()` - check if any elements in the Stream match a predicate, returns a boolean
-- `.allMatch()` - check if all elements in the Stream match a predicate, returns a boolean
-- `.noneMatch()` - check if no elements in the Stream match a predicate, returns a boolean
-- `.findFirst()` - find the first element in the Stream, returns an Optional
-- `.findAny()` - find any element in the Stream, returns an Optional
-- `.count()` - count the number of elements in the Stream, returns a long
-- `.min()` - find the minimum element in the Stream, returns an Optional
-- `.max()` - find the maximum element in the Stream, returns an Optional
-- `.collect()` - collect the elements in the Stream into a collection, returns a Collector
-- `.groupingBy()` - group elements in the Stream by a classifier function, returns a Map
+`.filter()` - remove elements from the Stream that don't match a predicate, returns a new Stream
+
+`.map()` - transform elements in the Stream to another value, returns a new Stream
+
+`.sorted()` - sort the elements in the Stream, returns a new Stream
+
+`.distinct()` - remove duplicate elements from the Stream, returns a new Stream
+
+`.limit()` - limit the number of elements in the Stream, returns a new Stream
+
+`.skip()` - skip a number of elements in the Stream, returns a new Stream
+
+`.flatMap()` - transform each element in the Stream to a Stream of elements, then flatten the Streams into a single Stream
+
+`.forEach()` - perform an action on each element in the Stream, returns void
+
+`.reduce()` - reduce the elements in the Stream to a single value, returns an Optional
+
+`.anyMatch()` - check if any elements in the Stream match a predicate, returns a boolean
+
+`.allMatch()` - check if all elements in the Stream match a predicate, returns a boolean
+
+`.noneMatch()` - check if no elements in the Stream match a predicate, returns a boolean
+
+`.findFirst()` - find the first element in the Stream, returns an Optional
+
+`.findAny()` - find any element in the Stream, returns an Optional
+
+`.count()` - count the number of elements in the Stream, returns a long
+
+`.min()` - find the minimum element in the Stream, returns an Optional
+
+`.max()` - find the maximum element in the Stream, returns an Optional
+
+`.collect()` - collect the elements in the Stream into a collection, returns a Collector
+
+  * `.collect(Collectors.joining())` - collect the elements in the Stream into a String 
+
+`.groupingBy()` - group elements in the Stream by a classifier function, returns a Map
   ```java
   List<Country> countries = new ArrayList<>();
   countries.add(new Country("USA", "New York"));
@@ -499,12 +528,45 @@ Streams allow you to perform operations like filtering, mapping, and reducing on
   // output: {USA=[New York, Los Angeles], UK=[London, Manchester]}
   ```
 - `.toList()` - collect the elements in the Stream into a List
+
   ```java
   .collect(Collectors.toList());
   ```
 - `.toSet()` - collect the elements in the Stream into a Set
+
 ```java
   .collect(Collectors.toSet());
+```
+
+### Comparator
+```java
+List<Integer> numbers = List.of(5, 1, 4, 2, 3);
+List<Integer> sortedNumbers = numbers.stream()
+        .sorted(Comparator.naturalOrder()) // Sorts using Integer's natural order
+        .collect(Collectors.toList());
+System.out.println("Natural Order: " + sortedNumbers); // Output: Natural Order: [1, 2, 3, 4, 5]
+
+List<String> names = List.of("Charlie", "Alice", "Bob");
+List<String> sortedNames = names.stream()
+        .sorted(Comparator.naturalOrder()) // Sorts using String's natural (lexicographical) order
+        .collect(Collectors.toList());
+System.out.println("Natural Order (Strings): " + sortedNames); // Output: Natural Order (Strings): [Alice, Bob, Charlie]
+```
+
+```java
+List<Integer> numbers = List.of(5, 1, 4, 2, 3);
+List<Integer> reverseSortedNumbers = numbers.stream()
+        .sorted(Comparator.reverseOrder()) // Sorts using Integer's reverse natural order
+        .collect(Collectors.toList());
+System.out.println("Reverse Order: " + reverseSortedNumbers); // Output: Reverse Order: [5, 4, 3, 2, 1]
+```
+
+```java
+List<Person> people = List.of(new Person("Bob", 30), new Person("Alice", 25), new Person("Charlie", 35));
+List<Person> sortedByAge = people.stream()
+        .sorted(Comparator.comparing(Person::getAge)) // Sort by age (natural order of age)
+        .collect(Collectors.toList());
+System.out.println("Sorted by Age: " + sortedByAge); // Output: Sorted by Age: [Alice(25), Bob(30), Charlie(35)]
 ```
 
 ```java
@@ -529,6 +591,12 @@ List<String> productNames = products.stream()
 // Group products by category
 Map<String, List<Product>> productsByCategory = products.stream()
         .collect(Collectors.groupingBy(Product::getCategory));
+```
+
+String to Character Stream
+```java
+String string = "abcd";
+Stream<Character> characterStream = string.chars().mapToObj(chararacter -> (char) chararacter);
 ```
 ## Extra
 … -> varargs (variable arguments) - allows a method to accept a variable number of arguments of the same type 
