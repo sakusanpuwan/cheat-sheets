@@ -1,230 +1,266 @@
 ## Variables
-| Keyword | Scope  | Hoisting | Can be reassigned? |
-| ------- | ------ | -------- | ------------------ |
-| var     | Global | Yes      | Yes                |
-| let     | Block  | No       | Yes                |
-| const   | Block  | No       | No                 |
 
-Scope - accessibility of variables  
+| Keyword | Scope    | Hoisting | Can be reassigned? |
+| ------- | -------- | -------- | ------------------ |
+| var     | Global   | Yes      | Yes                |
+| let     | Block {} | No       | Yes                |
+| const   | Block {} | No       | No                 |
 
-Hoisting - variable and function declarations are moved to the top of their scope 
+Scope - accessibility of variables
+
+Hoisting - variable and function declarations are moved to the top of their scope
+
+## var
+
+- avoid using in modern JavaScript
+- function scoped not block scoped
+- gets hoisted to the top of the function or global scope -> lead to bugs and unexpected behavior
 
 ```js
 // var
-var name; //hoisted to top of global scope and initialized 
+var name; //hoisted to top of global scope and initialized
 
-function printName() { 
-  console.log(name); 
-} 
+function printName() {
+  console.log(name);
+}
 
-printName(); // undefined 
+printName(); // undefined
 
-name = "John Doe"; 
+name = "John Doe";
 ```
+
+## let
+
+- use when you want to declare a variable that can be reassigned later
+- block scoped -> only accessible within the block it is defined in and cannot be reassigned in same block
+
 ```js
 // let
-let name; 
+let name;
 
-function printName() { 
-  console.log(name); 
-} 
+function printName() {
+  console.log(name);
+}
 
-printName(); // ReferenceError: name is not defined 
+printName(); // ReferenceError: name is not defined
 
-name = "John Doe"; 
+name = "John Doe";
 ```
+
+## const
+
+- use when you want to declare a variable that cannot be reassigned later
+- block scoped -> only accessible within the block it is defined in and cannot be reassigned in same block
+
 ```js
-const name = "John Doe"; 
+const name = "John Doe";
 
-if (name === "John Doe") { 
-  console.log("The name is John Doe."); 
-} 
+if (name === "John Doe") {
+  console.log("The name is John Doe.");
+}
 
-name = "Jane Doe"; // This will throw an error 
+name = "Jane Doe"; // This will throw an error
 ```
-| Type    | Truthy                       | Falsy     |
-| ------- | ---------------------------- | --------- |
-| Boolean | true                         | false     |
-| Number  | Any number other than 0     | 0         |
-| String  | Any string other than an empty string | "" |
+
+| Type    | Truthy                                  | Falsy           |
+| ------- | --------------------------------------- | --------------- |
+| Boolean | true                                    | false           |
+| Number  | Any number other than 0                 | 0               |
+| String  | Any string other than an empty string   | ""              |
 | Object  | Any object other than null or undefined | Null, undefined |
-| NaN     | NaN                          | NaN       |
+| NaN     | NaN                                     | NaN             |
 
-NaN - not a number , typically the result of attempting an impossible mathematical operation 
+NaN - not a number , typically the result of attempting an impossible mathematical operation
 
-Undefined- the value of a variable which has been declared but not yet assigned  
+Undefined- the value of a variable which has been declared but not yet assigned
 
-Null - an explicitly assigned value that represents the intentional absence of any object value 
+Null - an explicitly assigned value that represents the intentional absence of any object value
+
+## Template literals
+
+Template literals are strings wrapped in backticks (``) instead of single or double quotes. They allow for multi-line strings and string interpolation, which means you can embed expressions inside the string using `${expression}` syntax.
+
+```js
+const name = "Alice";
+const greeting = `Hello, ${name}!`;
+console.log(greeting); // Hello, Alice!
+```
 
 ## Objects
+
 ```js
-const apple = {  
-  color: 'Green', 
-  price: {  
-    bulk: '$3/kg',  
-    smallQty: '$4/kg'  
-    } 
-}; 
+const apple = {
+  color: "Green",
+  price: {
+    bulk: "$3/kg",
+    smallQty: "$4/kg",
+  },
+};
 
-console.log(apple.color); // => Green 
+console.log(apple.color); // => Green
 
-console.log(apple.price.bulk); // => $3/kg 
+console.log(apple.price.bulk); // => $3/kg
 
-apple.type = "fruit" // Declare new key-value 
+apple.type = "fruit"; // Declare new key-value
 
-delete apple.color;  
+delete apple.color;
 
-delete apple[color]; 
+delete apple["color"];
 ```
+
 ```js
-// Destructuring objects 
-const animal= { 
+// Destructuring objects
+const animal = {
+  name: "Bob",
 
-    name:'Bob', 
+  meal: 10,
 
-    meal:10, 
+  diet: "berries",
+};
 
-    diet:'berries' 
+// Bad
+function feed(animal) {
+  return `Feed ${animal.name} ${animal.meal} kg of ${animal.diet}`;
+}
 
-} 
+// Good - destructure object
+function feed(animal) {
+  const { name, meal, diet } = animal;
 
-// Bad 
-function feed(animal){ 
-
-    return `Feed ${animal.name} ${animal.meal} kg of ${animal.diet}`  
-
-} 
-
-// Good - destructure object 
-function feed(animal){ 
-
-    const {name, meal,diet} = animal; 
-
-    return `Feed ${name} ${meal} kg of ${diet}` 
-
-} 
+  return `Feed ${name} ${meal} kg of ${diet}`;
+}
 ```
+
 ```js
-// Factory object creation function  
-const createPerson = (name, age) => {  
-  return {  
-    name: name,  
-    age: age,  
-    sayHello: () => {  
-      console.log(`Hello, my name is ${this.name}, and I am ${this.age} years old.`);  
-    }  
-  };  
-}  
+// Factory object creation function
+const createPerson = (name, age) => {
+  return {
+    name: name,
+    age: age,
+    sayHello: () => {
+      console.log(
+        `Hello, my name is ${this.name}, and I am ${this.age} years old.`
+      );
+    },
+  };
+};
 
-const person1 = createPerson("John", 30); 
+const person1 = createPerson("John", 30);
 
-const person2 = createPerson("Alice", 25); 
+const person2 = createPerson("Alice", 25);
 
-person1.sayHello(); // Output: Hello, my name is John, and I am 30 years old. 
+person1.sayHello(); // Output: Hello, my name is John, and I am 30 years old.
 
-person2.sayHello(); // Output: Hello, my name is Alice, and I am 25 years old. 
+person2.sayHello(); // Output: Hello, my name is Alice, and I am 25 years old.
 ```
+
 ## Classes
+
 ```js
-// Class creation 
-class Dog { 
-  constructor(name) { 
-    this._name = name;   
-  } 
+// Class creation
+class Dog {
+  constructor(name) {
+    this._name = name;
+  }
 
-  introduce() {  
-    console.log('This is ' + this._name + ' !');   
-  } 
+  introduce() {
+    console.log("This is " + this._name + " !");
+  }
 
-  // A static method 
-  static bark() { 
-    console.log('Woof!');   
-  } 
+  // A static method
+  static bark() {
+    console.log("Woof!");
+  }
+}
 
-} 
+const myDog = new Dog("Buster");
 
-const myDog = new Dog('Buster'); 
+myDog.introduce();
 
-myDog.introduce(); 
+// Calling the static method
+Dog.bark();
 
-// Calling the static method 
-Dog.bark(); 
+// Parent class
+class Media {
+  constructor(info) {
+    this.publishDate = info.publishDate;
+    this.name = info.name;
+  }
+}
 
-// Parent class 
-class Media { 
-  constructor(info) { 
-    this.publishDate = info.publishDate; 
-    this.name = info.name; 
-  } 
-} 
+// Child class
+class Song extends Media {
+  constructor(songData) {
+    super(songData);
+    this.artist = songData.artist;
+  }
+}
 
- 
-
-// Child class 
-class Song extends Media { 
-  constructor(songData) { 
-    super(songData); 
-    this.artist = songData.artist; 
-  } 
-} 
-
-const mySong = new Song({  
-  artist: 'Queen',  
-  name: 'Bohemian Rhapsody',  
-  publishDate: 1975 
-}); 
+const mySong = new Song({
+  artist: "Queen",
+  name: "Bohemian Rhapsody",
+  publishDate: 1975,
+});
 ```
 
 ## Statements
-### If/Else 
-```js
-const num = 5; 
 
-if (num > 5){ 
-    console.log("Greater than "); 
-} else if (num == 5){ 
-    console.log("Equal"); 
-} else { 
-    console.log("Less than"); 
+### If/Else
+
+```js
+const num = 5;
+
+if (num > 5) {
+  console.log("Greater than ");
+} else if (num == 5) {
+  console.log("Equal");
+} else {
+  console.log("Less than");
 }
 ```
-### Ternary Operator 
+
+### Ternary Operator
+
 ```js
-const age = 18; 
+const age = 18;
 
-const message = age >= 18 ? "Can Vote" : "Cannot Vote"; 
+const message = age >= 18 ? "Can Vote" : "Cannot Vote";
 
-console.log(message); 
+console.log(message);
 ```
-### Switch 
-```js
-const food = 'salad'; 
 
-switch (food) { 
-  case 'oyster': 
-    console.log('The taste of the sea'); 
-    break; 
-  case 'pizza': 
-    console.log('A delicious pie'); 
-    break; 
-  default: 
-    console.log('Enjoy your meal'); 
-} 
+### Switch
+
+```js
+const food = "salad";
+
+switch (food) {
+  case "oyster":
+    console.log("The taste of the sea");
+    break;
+  case "pizza":
+    console.log("A delicious pie");
+    break;
+  default:
+    console.log("Enjoy your meal");
+}
 ```
-## Operators 
+
+## Operators
+
 ```js
-// AND OR operators 
-const x = 15; 
-const y = 0; 
+// AND OR operators
+const x = 15;
+const y = 0;
 
-// Logical OR operator 
-console.log(x > 10 || y < 5); // true 
-// Logical AND operator  
-console.log(x > 10 && y < 5); // false 
-
+// Logical OR operator
+console.log(x > 10 || y < 5); // true
+// Logical AND operator
+console.log(x > 10 && y < 5); // false
 ```
+
 ```js
-// Nullish coalescing operator ??  
+// Nullish coalescing operator ??
 const valueToCheck1 = null;
 const valueToCheck2 = "value";
 
@@ -233,398 +269,445 @@ const defaultValue = "default";
 const result1 = valueToCheck1 ?? defaultValue; // "default"
 const result2 = valueToCheck2 ?? defaultValue; // "value"
 
-// If valueToCheck == null or undefined -> default value 
+// If valueToCheck == null or undefined -> default value
 
-// If other falsy (false,0,"") -> valueToCheck 
+// If other falsy (false,0,"") -> valueToCheck
 ```
+
 ```js
-// Logical operator &&  
+// Logical operator &&
 
-const result = age >= 18 && "You are eligible to vote!";  
+const result = age >= 18 && "You are eligible to vote!";
 
-// If age > 18 -> returns message 
+// If age > 18 -> returns message
 
-// Else  -> returns false 
+// Else  -> returns false
 ```
+
 ```js
-// Spread Operator 
+// Spread Operator
 
-[newItem,...prevArray] 
+[newItem,...prevArray]
 
-{ ...oldObject, newKey: newValue } 
+const firstArray = [1, 2, 3, 4, 5];
+
+const secondArray = [6, ...firstArray];
+
+console.log(secondArray); // Output: [6, 1, 2, 3, 4, 5]
+
+{ ...oldObject, newKey: newValue }
 ```
-== checks value 
 
-=== checks both value and type 
+== checks value
+
+=== checks both value and type
+
 ```js
-0 == false   // true 
+0 == false; // true
 
-0 === false  // false, different type 
+0 === false; // false, different type
 
-1 == "1"     // true,  automatic type conversion  
+1 == "1"; // true,  automatic type conversion
 
-1 === "1"    // false, different type 
+1 === "1"; // false, different type
 
-null == undefined  // true 
+null == undefined; // true
 
-null === undefined // false 
+null === undefined; // false
 
-'0' == false       // true 
+"0" == false; // true
 
-'0' === false      // false 
+"0" === false; // false
 ```
 
 ## Loops
+
 ### While loop
-```js
-let i = 0; 
 
-while (i < 5) {         
-  console.log(i); 
-  i++; 
-} 
-```
-### For loop
 ```js
-for (let i = 0; i < 4; i ++) { 
-  console.log(i); 
-}; 
-```
-### For loop in array
-```js
-for (let i = 0; i < array.length; i++){ 
-  console.log(array[i]); 
-} 
-```
-### For loop + Continue
-```js
-for (i = 0; i < 10; i++) { 
-  if (i === 3) {  
-    continue; // Rest of body skipped 
-  } 
-  text += "The number is " + i + "<br>"; 
-}  
+let i = 0;
 
-// 3 is not printed 
-```
-### For loop + Break
-```js
-for (let i = 0; i < 99; i += 1) { 
-  if (i > 5) { 
-     break; 
-  } 
-  console.log(i) 
-} 
-
-// => 0 1 2 3 4 5 
-```
-### For each of loop
-```js
-const fruits = ["apple", "orange", "banana"]; 
-
-for (let fruit of fruits) { 
-  console.log(fruit); 
-} 
-```
-### For each in loop
-```js
-const fruits = ["apple", "orange", "banana"]; 
-
-for (let index in fruits) { 
-  console.log(index); 
-} 
-```
-### Do While loop
-```js
-x = 0 
-
-i = 0 
-
-do { 
-  x = x + i; 
-  console.log(x) 
-  i++; 
-} while (i < 5); 
-
-// => 0 1 3 6 10 
-```
-## Functions
-```js
-// Defining the function: 
-function sum(num1, num2) { 
-  return num1 + num2; 
-} 
-
-// Calling the function: 
-sum(3, 6); // 9 
-```
-```js
-// Named function 
-function add(x,y) { 
-  return x + y; 
+while (i < 5) {
+  console.log(i);
+  i++;
 }
 ```
+
+### For loop
+
 ```js
-// Anonymous function 
-const add = function(x,y) { 
-  return x + y; 
-} 
+for (let i = 0; i < 4; i++) {
+  console.log(i);
+}
 ```
+
+### For loop in array
+
 ```js
-// Arrow function 
-const add = (x,y) => {
+for (let i = 0; i < array.length; i++) {
+  console.log(array[i]);
+}
+```
+
+### For loop + Continue
+
+```js
+for (i = 0; i < 10; i++) {
+  if (i === 3) {
+    continue; // Rest of body skipped
+  }
+  console.log(i); // 0, 1, 2, 4, 5, 6, 7, 8, 9
+}
+
+// 3 is not printed
+```
+
+### For loop + Break
+
+```js
+for (let i = 0; i < 99; i += 1) {
+  if (i > 5) {
+    break;
+  }
+  console.log(i);
+}
+
+// => 0 1 2 3 4 5
+```
+
+### For each of loop
+
+```js
+const fruits = ["apple", "orange", "banana"];
+
+for (let fruit of fruits) {
+  console.log(fruit);
+}
+```
+
+### For each in loop
+
+```js
+const fruits = ["apple", "orange", "banana"];
+
+for (let index in fruits) {
+  console.log(index);
+}
+```
+
+### Do While loop
+
+```js
+x = 0;
+
+i = 0;
+
+do {
+  x = x + i;
+  console.log(x);
+  i++;
+} while (i < 5);
+
+// => 0 1 3 6 10
+```
+
+## Functions
+
+```js
+// Defining the function:
+function sum(num1, num2) {
+  return num1 + num2;
+}
+
+// Calling the function:
+sum(3, 6); // 9
+```
+
+```js
+// Named function
+function add(x, y) {
   return x + y;
-}; 
+}
+```
+
+```js
+// Anonymous function
+const add = function (x, y) {
+  return x + y;
+};
+```
+
+```js
+// Arrow function
+const add = (x, y) => {
+  return x + y;
+};
 
 // Simplified Arrow function
-const add = (x,y) => x + y;
+const add = (x, y) => x + y;
 ```
+
 ```js
-// Higher Order functions 
-const doCalculation = (number1,number2,callback) => { 
-    callback(number1,number2); 
-} 
+// Higher Order functions
+const doCalculation = (number1, number2, callback) => {
+  callback(number1, number2);
+};
 
-doCalculation(2,3,sum); 
+doCalculation(2, 3, sum);
 
-doCalculation(2,3,subtract); 
+doCalculation(2, 3, subtract);
 
-doCalculation(2,3,multiply); 
+doCalculation(2, 3, multiply);
 
-// Inline callback 
-doCalculation(2,3, (number1,number2) => { 
-    console.log(number1/number2); 
-}) 
+// Inline callback
+doCalculation(2, 3, (number1, number2) => {
+  console.log(number1 / number2);
+});
 ```
+
 ## Arrays
+
 ```js
 // Array creation
-const fruits = ["apple", "orange", "banana"]; 
+const fruits = ["apple", "orange", "banana"];
 
-// Different data types 
-const data = [1, 'chicken', false]; 
+// Different data types
+const data = [1, "chicken", false];
 
-// Array methods 
-const array = [1, 2, 3, 4]; 
+// Array methods
+const array = [1, 2, 3, 4];
 
-array.at(2); // 3 
+array.at(2); // 3
 
-array.pop(); // returns:4 | array = [1,2,3] 
+array.pop(); // returns:4 | array = [1,2,3]
 
-array.push(5); // returns:5 | array = [1, 2, 3, 4, 5]; 
+array.push(5); // returns:5 | array = [1, 2, 3, 4, 5];
 
-array.fill(6); // [6, 6, 6, 6] 
+array.fill(6); // [6, 6, 6, 6]
 
-array.join(" "); // "1 2 3 4" (string) 
+array.join(" "); // "1 2 3 4" (string)
 
-array.shift(); // returns: 1, array = [2, 3, 4] 
+array.shift(); // returns: 1, array = [2, 3, 4]
 
-array.unshift(0); // [0, 1, 2, 3, 4] 
+array.unshift(0); // [0, 1, 2, 3, 4]
 
-array.pop(); // [1,2,3] 
+array.pop(); // [1,2,3]
 
-array.reverse(); // [4, 3, 2, 1] 
+array.reverse(); // [4, 3, 2, 1]
 
-array.includes (3); // true; 
+array.includes(3); // true;
 
-array.slice(1,3); // [1,4] 
+array.slice(1, 3); // [1,4]
 
-array.sort() 
+array.sort();
 
-let playersByPoints = playerData.sort((a,b) => b.total_points - a.total_points) 
+let playersByPoints = playerData.sort(
+  (a, b) => b.total_points - a.total_points
+);
 
-array.concat(5); // [1,2,3,4,5] 
+array.concat(5); // [1,2,3,4,5]
 
- 
+const array = [1, 2, 3, 4];
 
-const array = [1, 2, 3, 4];  
+const array2 = [5, 6, 7, 8];
 
-const array2 = [5, 6, 7, 8];  
+array.concat(array2);
 
-array.concat(array2) 
+array.map((item) => 3 * item); // [3, 6, 9, 12]
 
- 
+array.map((item, index) => 3 * item * index);
 
-array.map((item) => 3 * item); // [3, 6, 9, 12] 
+array.find((item) => item > 2); // 3 (first match)
 
-array.map((item,index) => 3 * item * index); 
+array.filter((item) => item > 2); // [3, 4]
 
-array.find((item) => item > 2); // 3 (first match) 
+array.every((item) => item > 0); // true
 
-array.filter((item) => item > 2); // [3, 4] 
+array.findIndex((item) => (item = 3)); // 2;
 
-array.every ((item) => item > 0); // true 
+array.reduce((prev, curr) => prev + curr, 0); // 10;
 
-array.findIndex ((item) => item = 3); // 2; 
+Array.isArray(array); // Checks if variable is array
 
-array.reduce((prev, curr) => prev + curr, 0); // 10; 
+const uniqueArray = [...new Set(array)]; // Removes duplicates
 
-Array.isArray(array) // Checks if variable is array 
+const users = [
+  { name: "Abe", age: 45 },
+  { name: "Jennifer", age: 27 },
+];
 
-const uniqueArray = [...new Set(array)] // Removes duplicates 
-
-const users = [{ name: "Abe", age: 45 }, { name: "Jennifer", age: 27 }]; 
- 
-pluck(users, 'name'); // ['Abe', 'Jennifer'] 
+pluck(users, "name"); // ['Abe', 'Jennifer']
 ```
+
 ## String
+
 ```js
-const str = "This is a string" // Converts a value to a string 
+const str = "This is a string"; // Converts a value to a string
 
-const character = str.charAt(0) // Returns the character at the specified index 
+const character = str.charAt(0); // Returns the character at the specified index
 
-const concatenatedStr = str + ", and this is another string." // Concatenates two or more strings 
+const concatenatedStr = str + ", and this is another string."; // Concatenates two or more strings
 
-const index = str.indexOf("is") // Returns the index of the first occurrence of a substring 
+const index = str.indexOf("is"); // Returns the index of the first occurrence of a substring
 
-const lastIndex = str.lastIndexOf("is") // Returns the index of the last occurrence of a substring 
+const lastIndex = str.lastIndexOf("is"); // Returns the index of the last occurrence of a substring
 
-const matches = str.match(/\w+/g) // Returns an array of matches found in a string 
+const matches = str.match(/\w+/g); // Returns an array of matches found in a string
 
-const replacedStr = str.replace("This", "That") // Replaces all or part of a string with another string 
+const replacedStr = str.replace("This", "That"); // Replaces all or part of a string with another string
 
-const replacedStr = str.replaceAll("This", "That") // Replaces all occurences of string with another string 
+const replacedStr = str.replaceAll("This", "That"); // Replaces all occurences of string with another string
 
-const search = str.search("is") // Returns the index of the first occurrence of a substring, ignoring case 
+const search = str.search("is"); // Returns the index of the first occurrence of a substring, ignoring case
 
-const slicedStr = str.slice(0, 4) // Extracts a substring from a string 
+const slicedStr = str.slice(0, 4); // Extracts a substring from a string
 
-const splittedStr = str.split(" ") // Splits a string into an array of substrings 
+const splittedStr = str.split(" "); // Splits a string into an array of substrings
 
-const substring = str.substring(2, 8) // Extracts a substring from a string, index 2-> 8 
+const substring = str.substring(2, 8); // Extracts a substring from a string, index 2-> 8
 
-const toUpperCase = str.toUpperCase() // Converts a string to uppercase 
+const toUpperCase = str.toUpperCase(); // Converts a string to uppercase
 
-const toLowerCase = str.toLowerCase() // Converts a string to lowercase 
+const toLowerCase = str.toLowerCase(); // Converts a string to lowercase
 
-const trimmedStr = str.trim() // Removes whitespace from the beginning and end of a string 
+const trimmedStr = str.trim(); // Removes whitespace from the beginning and end of a string
 
-const trimmedStartStr = str.trimStart() // Removes whitespace from the beginning of a string 
+const trimmedStartStr = str.trimStart(); // Removes whitespace from the beginning of a string
 
-const trimmedEndStr = str.trimEnd() // Removes whitespace from the end of a string 
+const trimmedEndStr = str.trimEnd(); // Removes whitespace from the end of a string
 
-const length = str.length // Gives length of string 
+const length = str.length; // Gives length of string
 ```
+
 ```js
-let age = 7; 
+let age = 7;
 
-// String concatenation 
-'Tommy is ' + age + ' years old.'; 
+// String concatenation
+"Tommy is " + age + " years old.";
 
-// String interpolation 
-`Tommy is ${age} years old.`; 
+// String interpolation
+`Tommy is ${age} years old.`;
 ```
-## Number 
+
+## Number
+
 ```js
-Math.floor(5.95) //5 Rounds number down 
+Math.floor(5.95); //5 Rounds number down
 
-Math.random() // Returns random number between 0 - 1 
+Math.random(); // Returns random number between 0 - 1
 ```
+
 ## Promises
+
 Represents the eventual completion (or failure) of an asynchronous operation and its resulting value. An asynchronous operation is a task that does not necessarily occur in a sequential order with the rest of the program
- 
-```js
-const promise = new Promise((resolve, reject) => { 
-  const result = true; // Result of an operation you're calling 
 
-  // An asynchronous operation. 
-  if (result) { 
-    resolve('Resolved!'); // Promise resolved 
-  } else { 
-    reject(Error('Error')); // Promise rejected  
-  } 
-}); 
+```js
+const promise = new Promise((resolve, reject) => {
+  const result = true; // Result of an operation you're calling
+
+  // An asynchronous operation.
+  if (result) {
+    resolve("Resolved!"); // Promise resolved
+  } else {
+    reject(Error("Error")); // Promise rejected
+  }
+});
 ```
+
 ```js
-promise.then((result) => { 
-  console.log(result) 
-}).catch((error) => { 
-  console.error(error); 
-}); 
+promise
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
-// Promise returns if resolved or rejected 
+// Promise returns if resolved or rejected
 
-// .then called on promise to register callbacks to execute when promise 
+// .then called on promise to register callbacks to execute when promise
 
 // resolved or rejected
 
-// .catch used to register callback to execute when promise rejected 
+// .catch used to register callback to execute when promise rejected
 ```
+
 ```js
 // Function to fetch data from an API
 function fetchData(url) {
   return new Promise((resolve, reject) => {
     fetch(url) // Asynchronous HTTP request
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json(); // Parse JSON response
       })
-      .then(data => {
+      .then((data) => {
         resolve(data); // Resolve Promise with fetched data
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error); // Reject Promise if an error occurs
       });
   });
 }
 
 // Example usage
-const apiUrl = 'https://api.example.com/data';
+const apiUrl = "https://api.example.com/data";
 fetchData(apiUrl)
-  .then(data => {
+  .then((data) => {
     // Handle fetched data
     console.log(data);
   })
-  .catch(error => {
+  .catch((error) => {
     // Handle errors
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
   });
-
 ```
+
 ```js
-// Promise.all 
-const promise1 = new Promise((resolve, reject) => { 
-  setTimeout(() => { 
-    resolve(3); 
-  }, 300); 
-}); 
+// Promise.all
+const promise1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(3);
+  }, 300);
+});
 
-const promise2 = new Promise((resolve, reject) => { 
-  setTimeout(() => { 
-    resolve(2); 
-  }, 200); 
-}); 
+const promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(2);
+  }, 200);
+});
 
-// Resolving promises asynchronously = concurrency  
-Promise.all([promise1, promise2]).then((res) => { 
-  console.log(res[0]); // 3 
-  console.log(res[1]); // 2 
-}); 
+// Resolving promises asynchronously = concurrency
+Promise.all([promise1, promise2]).then((res) => {
+  console.log(res[0]); // 3
+  console.log(res[1]); // 2
+});
 ```
+
 ```js
-// Chaining promise resolves = composition  
-const promise = new Promise((resolve, reject) => {   
-  setTimeout(() => { 
-    resolve('*'); 
-  }, 1000); 
-}); 
+// Chaining promise resolves = composition
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("*");
+  }, 1000);
+});
 
-const twoStars = (star) => {   
-  return (star + star); 
-}; 
-
-const oneDot = (star) => {   
-  return (star + '.'); 
-}; 
-
-const print = (val) => { 
-  console.log(val); 
+const twoStars = (star) => {
+  return star + star;
 };
 
-// Chaining them all together 
-promise.then(twoStars).then(oneDot).then(print); // "**."" 
+const oneDot = (star) => {
+  return star + ".";
+};
+
+const print = (val) => {
+  console.log(val);
+};
+
+// Chaining them all together
+promise.then(twoStars).then(oneDot).then(print); // "**.""
 
 // promise is chained with .then() ->
 // twoStars is passed as callback function to .then()
@@ -635,24 +718,27 @@ promise.then(twoStars).then(oneDot).then(print); // "**.""
 
 // final chain print returns resolved value
 ```
+
 ```js
-// Asynchronous function that returns a Promise 
-function delay(milliseconds) { 
-  return new Promise((resolve) => { 
-    setTimeout(() => { 
-      resolve(); 
-    }, milliseconds); 
-  }); 
-} 
+// Asynchronous function that returns a Promise
+function delay(milliseconds) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, milliseconds);
+  });
+}
 ```
+
 ## Async - Await
+
 ```js
 // Asynchronous function using async-await indicates function will always return a promise allowing await keyword
 async function fetchData() {
   console.log("Fetching data...");
 
   // Asynchronously fetch data from an API
-  const response = await fetch('https://api.example.com/data');
+  const response = await fetch("https://api.example.com/data");
   const data = await response.json();
 
   console.log("Data fetched:", data);
@@ -664,42 +750,48 @@ async function fetchData() {
 fetchData();
 console.log("Continuing with other tasks in other functions...");
 ```
+
 ```console
 Fetching data...
 Continuing with other tasks in other functions...
 Data fetched: { /* fetched data from the API */ }
 Other tasks within this function can now continue...
 ```
+
 ```js
-function helloWorld() { 
-  return new Promise(resolve => { 
-    setTimeout(() => { 
-      resolve('Hello World!'); 
-    }, 2000); 
-  }); 
-} 
+function helloWorld() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Hello World!");
+    }, 2000);
+  });
+}
 
-async function msg() { 
+async function msg() {
   const msg = await helloWorld(); // Waits here for 2 seconds then resolved value = 'Hello World!'
-  console.log('Message:', msg); 
-} 
+  console.log("Message:", msg);
+}
 
-msg(); // Message: Hello World! <-- after 2 seconds 
+msg(); // Message: Hello World! <-- after 2 seconds
 ```
+
 ## Handling API requests
+
 ```js
 // GET request
-const getData = async() => { 
-    try { 
-        const response = await fetch(`URL`); 
-        const data = await response.json(); 
-    } catch (error) { 
-        console.log(error); 
-    } 
-} 
+const getData = async () => {
+  try {
+    const response = await fetch(`URL`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-getData().then(data => console.log(data)); 
+getData().then((data) => console.log(data));
 ```
+
 ```js
 // POST request
 const postData = async (newData) => {
@@ -707,7 +799,7 @@ const postData = async (newData) => {
     const response = await fetch(`URL`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newData)
+      body: JSON.stringify(newData),
     });
     const data = await response.json();
   } catch (error) {
@@ -715,39 +807,131 @@ const postData = async (newData) => {
   }
 };
 ```
+
 ## Extra
+
 ```js
-setTimeout(functionName, 6000); 
+setTimeout(functionName, 6000);
 
-const now = new Date(); // Get current date/time 
+const now = new Date(); // Get current date/time
 
-https://htmlcheatsheet.com/js/ 
+https://htmlcheatsheet.com/js/
 ```
+
 ### Console
+
 ```js
-console.log(); 
+console.log();
 
-console.info() 
+console.info();
 
-console.warn() 
+console.warn();
 
-console.error() 
+console.error();
 
-console.dir() //print the properties of an object 
+console.dir(); //print the properties of an object
 
-console.table() //print a table of data 
+console.table(); //print a table of data
 
-console.trace() //print the stack trace of the current execution 
+console.trace(); //print the stack trace of the current execution
 
-console.log(foo); 
+console.log(foo);
 
-console.log(bar); 
+console.log(bar);
 
-console.log(baz); 
+console.log(baz);
 
-// Instead this cleaner 
+// Instead this cleaner
 
-console.log({foo, bar, baz}); 
+console.log({ foo, bar, baz });
 
-console.table([foo, bar, baz]); 
+console.table([foo, bar, baz]);
+```
+
+## CommonJS Modules
+
+CommonJS is a module system used in Node.js. It allows you to organize your code into separate files and share functionality between them. In CommonJS, you use `require` to import modules and `module.exports` to export them.
+
+```js
+// math.js
+const PI = 3.14159;
+function add(a, b) {
+  return a + b;
+}
+function multiply(a, b) {
+  return a * b;
+}
+module.exports = { PI, add, multiply };
+```
+
+```js
+// logger.js
+function defaultExport() {
+  console.log("Default Export");
+}
+module.exports = defaultExport;
+```
+
+```js
+// main.js
+const { PI, add, multiply } = require("./math.js");
+const defaultExport = require("./logger.js"); // Importing the default export
+defaultExport(); // Calling the default export function
+console.log(`The value of PI is ${PI}`); // The value of PI is 3.14159
+console.log(`2 + 3 = ${add(2, 3)}`); // 2 + 3 = 5
+console.log(`2 * 3 = ${multiply(2, 3)}`); // 2 * 3 = 6
+```
+
+## ES6 Modules
+
+ES6 modules are a way to organize and split code in JavaScript. They allow you to break your code into smaller, reusable pieces, making it easier to manage and maintain. Modules can be imported and exported, enabling better code organization and reuse across different files.
+
+### Named exports
+
+- Use {}.
+- Can export multiple values.
+- Must match the exported name.
+
+### Default exports
+
+- Use `export default` for a single value.
+- Can be imported without curly braces.
+- Can have any name when imported.
+
+```js
+// math.js
+export const PI = 3.14159;
+
+export function add(a, b) {
+  return a + b;
+}
+
+export function multiply(a, b) {
+  return a * b;
+}
+```
+
+```js
+// logger.js
+export default function defaultExport() {
+  console.log("Default Export");
+}
+```
+
+```js
+// main.js
+import { PI, add, multiply } from "./math.js";
+import defaultExport from "./logger.js"; // Importing the default export
+defaultExport(); // Calling the default export function
+
+console.log(`The value of PI is ${PI}`); // The value of PI is 3.14159
+console.log(`2 + 3 = ${add(2, 3)}`); // 2 + 3 = 5
+console.log(`2 * 3 = ${multiply(2, 3)}`); // 2 * 3 = 6
+```
+
+To allow import/export in all .js files.
+
+```json
+//package.json
+"type": "module"
 ```
